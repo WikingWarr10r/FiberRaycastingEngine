@@ -1,12 +1,8 @@
 import pygame
 from fiber_engine_helper import BLACK
-from fiber_engine_helper import map_height
-from fiber_engine_helper import map_width
-from fiber_engine_helper import map_grid
 from fiber_engine_helper import screen
 from fiber_engine_helper import clock
-from fiber_engine_helper import object
-from fiber_engine_helper import objects
+from fiber_engine_main import done
 
 def set_window_title(caption):
     pygame.display.set_caption(caption)
