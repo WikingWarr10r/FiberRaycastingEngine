@@ -12,25 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pygame
-import math
 from fiber_engine_helper import *
 from fiber_engine_functions import *
 
 # Initialize pygame
-pygame.init()
-
-player = character(90, 90, 0, 10, 10)
+fiber_engine_init()
 
 # Set the title of the window
 set_window_title("Fiber Engine Display")
 
 # Loop until the user clicks the close button.
 done = False
-
-# Initialize some variables
-fov = 60
-res = 8
 
 # -------- Main Program Loop -----------
 while not done:
@@ -73,35 +65,7 @@ while not done:
     player.update()
 
     # Simulate the rays
-    draw_x = 0
-    for ray in range(0, int(fov / float(res))*int(res), 1):
-        # Calculate the angle of the ray
-        ray_angle = (player.angle + ray) - ((float(fov)/2) * float(res))
-
-        # Calculate the distance to the wall
-        distance = 0
-        while True:
-            # Calculate the x and y coordinates of the ray
-            ray_x = player.x + distance * math.cos(math.radians(ray_angle))
-            ray_y = player.y + distance * math.sin(math.radians(ray_angle))
-
-            # Check if the ray is out of bounds
-            if ray_x < 0 or ray_x > map_width * 60 or ray_y < 0 or ray_y > map_height * 60:
-                break
-
-            # Check if the ray has hit a wall
-            if map_grid[int(ray_y / 60)][int(ray_x / 60)] == 1:
-                break
-
-            # Increment the distance
-            distance += 1
-
-        distance += 0.0001
-        height = 2 * (4000 / distance)
-
-        # Draw the ray
-        pygame.draw.line(screen, (255 - distance/4, 255 - distance/4, 255 - distance/4), [draw_x, height + 400], [draw_x, (0 - height) + 300], 2 * res)
-        draw_x = draw_x + 2 * res
+    raycast()
 
     # --- Update the screen with what we've drawn.
     update_map()
